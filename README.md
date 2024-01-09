@@ -73,36 +73,7 @@ awslocal ec2 describe-instances --query 'Reservations[*].Instances[*].[InstanceI
 ```
 
 ## Con terraform
-Crear archivo provider.tf
-```terraform
-provider "aws" {
-  access_key = "test"
-  secret_key = "test"
-  region     = "us-east-1"
-}
-```
-
-Crear archivo provider.tf
-```terraform
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 5.0"
-    }
-  }
-}
-
-resource "aws_instance" "app_server" {
-  ami           = "ami-ff0fea8310f3"
-  instance_type = "t3.nano"
-
-  tags = {
-    Name = "ExampleAppServerInstance"
-  }
-  count = 2
-}
-```
+Crear archivo provider.tf y main.tf
 
 Ejecutar comandos
 ```shell
