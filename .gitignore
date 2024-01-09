@@ -5,6 +5,8 @@
 *.tfstate
 *.tfstate.*
 
+*.hcl
+
 # Crash log files
 crash.log
 crash.*.log
@@ -32,3 +34,16 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+### Code ###
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+### VENV
+venv/*
+.venv
+venv
+/.venv*
