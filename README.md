@@ -111,6 +111,12 @@ resource "aws_sqs_queue" "tf_queue_two" {
 }
 ```
 
+Ejecutar comandos de terraform
+```shell
+tflocal plan
+tflocal apply -auto-approve
+```
+
 Para probar usamos el envio de mensajes
 ```shell
 awslocal sqs send-message \
