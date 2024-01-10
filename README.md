@@ -81,3 +81,62 @@ tflocal init
 tflocal plan
 tflocal apply -auto-approve
 ```
+
+## Creando las SQS
+Se agrego al main.tf el codigo:
+
+```terraform
+resource "aws_sqs_queue" "tf_queue_one" {
+  name                      = "queue-one"
+  delay_seconds             = 10
+  max_message_size          = 2048
+  message_retention_seconds = 86400
+  receive_wait_time_seconds = 10
+
+  tags = {
+    Environment = "production"
+  }
+}
+
+resource "aws_sqs_queue" "tf_queue_two" {
+  name                      = "queue-two"
+  delay_seconds             = 10
+  max_message_size          = 2048
+  message_retention_seconds = 86400
+  receive_wait_time_seconds = 10
+
+  tags = {
+    Environment = "production"
+  }
+}
+```
+
+Para probar usamos el envio de mensajes
+```shell
+awslocal sqs send-message \
+    --queue-url http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/queue-one \
+    --message-body "Prueba a sqs 1.0"
+
+awslocal sqs send-message \
+    --queue-url http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/queue-one \
+    --message-body "Prueba a sqs 1.1"
+
+awslocal sqs send-message \
+    --queue-url http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/queue-two \
+    --message-body "Prueba a sqs 2.0"   
+
+awslocal sqs send-message \
+    --queue-url http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/queue-two \
+    --message-body "Prueba a sqs 2.1"    
+```   
+
+Para recepcionar los mensajes
+```shell
+awslocal sqs receive-message --queue-url http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/queue-one
+
+awslocal sqs receive-message --queue-url http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/queue-one
+
+awslocal sqs receive-message --queue-url http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/queue-two
+
+awslocal sqs receive-message --queue-url http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/queue-two
+```
