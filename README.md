@@ -82,6 +82,11 @@ tflocal plan
 tflocal apply -auto-approve
 ```
 
+localstack logs
+be accessible via SSH at: 127.0.0.1:12862, 172.17.0.4:22
+curl 172.17.0.4:8000
+
+
 ## Creando las SQS
 Se agrego al main.tf el codigo:
 
@@ -145,4 +150,10 @@ awslocal sqs receive-message --queue-url http://sqs.us-east-1.localhost.localsta
 awslocal sqs receive-message --queue-url http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/queue-two
 
 awslocal sqs receive-message --queue-url http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/queue-two
+```
+
+## Creando todo con python
+Ejecutar el archivo de python 
+```python
+python3 scrypt.py
 ```

@@ -31,6 +31,19 @@ resource "aws_instance" "app_server" {
   count = 2
 }
 
+resource "aws_dynamodb_table" "primera_tabla" {
+  name           = "PrimeraTabla"
+  billing_mode   = "PROVISIONED"
+  read_capacity  = 5
+  write_capacity = 5
+  hash_key       = "Id"
+
+  attribute {
+    name = "Id"
+    type = "S"
+  }
+}
+
 resource "aws_sqs_queue" "tf_queue_one" {
   name                      = "queue-one"
   delay_seconds             = 10
