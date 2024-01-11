@@ -152,6 +152,31 @@ awslocal sqs receive-message --queue-url http://sqs.us-east-1.localhost.localsta
 awslocal sqs receive-message --queue-url http://sqs.us-east-1.localhost.localstack.cloud:4566/000000000000/queue-two
 ```
 
+## Creando la DynamoDB
+Se agrego al main.tf el codigo:
+
+```terraform
+resource "aws_dynamodb_table" "primera_tabla" {
+  name           = "PrimeraTabla"
+  billing_mode   = "PROVISIONED"
+  read_capacity  = 5
+  write_capacity = 5
+  hash_key       = "Id"
+
+  attribute {
+    name = "Id"
+    type = "S"
+  }
+}
+```
+
+Ejecutar comandos de terraform
+```shell
+tflocal plan
+tflocal apply -auto-approve
+```
+
+
 ## Creando todo con python
 Ejecutar el archivo de python 
 ```python
